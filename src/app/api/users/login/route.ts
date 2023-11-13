@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
     //check user exists
     const user = await User.findOne({ email });
-    console.log("userfromDatabase :>> ", user);
+
     if (!user) {
       return NextResponse.json(
         { error: "User doesnot exist with this email" },
@@ -28,7 +28,12 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
+    if (!user.isVerified) {
+      return NextResponse.json(
+        { error: "User is not verified.Pls check your Mail to verify" },
+        { status: 400 }
+      );
+    }
     //create Token data
     const tokenData = {
       id: user._id,

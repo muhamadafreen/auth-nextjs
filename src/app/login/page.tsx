@@ -9,15 +9,17 @@ function LoginPage() {
   const router = useRouter();
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const onLogin = async () => {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/login", user);
-      console.log("response.data :>> ", response.data);
       router.push("/profile");
-    } catch (error) {
+    } catch (error:any) {
+      setError(error.response.data.error)
       console.log("error :>> ", error);
+      // throw new Error(error)
       setLoading(false);
     } finally {
       setLoading(false);
@@ -35,6 +37,7 @@ function LoginPage() {
       <div className="bg-white p-8 rounded shadow-md max-w-md w-full">
         <h1 className="text-2xl font-semibold mb-4 text-center">Login</h1>
         <hr className="my-4" />
+        <p className="text-red-500">{error}</p>
         <div className="space-y-4">
           <label
             htmlFor="email"

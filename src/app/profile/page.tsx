@@ -11,8 +11,6 @@ export default function Profile() {
     try {
       const response = await axios.get("/api/users/getUser");
       setuserData(response.data.data);
-      console.log("object :>> ", response);
-      console.log("userData :>> ", userData);
     } catch (error: any) {
       console.log("error :>> ", error);
     }

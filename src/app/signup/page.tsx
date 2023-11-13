@@ -22,7 +22,6 @@ function SignupPage() {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", user);
-      console.log("response.data :>> ", response.data);
       if (response.data.success) {
         router.push("/login");
       }
